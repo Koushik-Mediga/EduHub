@@ -1,1 +1,12 @@
 /* write your css here */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    overflow-x: hidden;
+}
+
+.bg-image-2{
+    background: url('../src/assets/Images/bghome.svg');
+}
