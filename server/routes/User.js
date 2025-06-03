@@ -9,9 +9,9 @@ const router = express.Router();
 router.post('/login', login);
 router.post('/signup', signup);
 router.post('/sendotp', sendOTP);
-router.post('/changePassword', auth, changePassword);
+router.post('/changepassword', auth, changePassword);
 
-router.post('/resetPasswordToken', resetPasswordToken);
-router.post('/resetPassword', resetPassword);
+router.post('/resetpasswordtoken', resetPasswordToken);
+router.post('/resetpassword', resetPassword);
 
 module.exports = router;

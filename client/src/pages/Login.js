@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom'
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const dispatch = useDispatch();
-    const [loginDetails, setLoginDetails] = useState({email:"", password:"", accountType:"Student"});
+    const [loginDetails, setLoginDetails] = useState({email:"", password:""});
     const navigate = useNavigate();
 
     const changeHandler = (event)=>{
@@ -39,24 +39,6 @@ const Login = () => {
             <form className='w-1/3 flex flex-col justify-start gap-5' onSubmit={submitHandler}>
                 <h1 className='text-3xl text-white font-bold'>Welcome Back</h1>
                 <p className='text-md text-richblack-300'>Get ready to explore the world of endless Learning. Are you excited to learn from the best? If yes, then login to learn the latest technologies from the best teachers around the world.</p>
-                <div className='w-9/12 p-1 rounded-full bg-richblack-700 flex flex-row'>
-                <div
-                    className={`w-1/2 text-center py-1 rounded-full transition-all hover:cursor-pointer ${
-                    loginDetails.accountType === 'Student' ? 'bg-richblack-900 text-white' : 'text-white/70'
-                    }`}
-                    onClick={() => setLoginDetails((prev)=>{return ({...prev, accountType:"Student"})})}
-                >
-                    Student
-                </div>
-                <div
-                    className={`w-1/2 text-center py-1 rounded-full transition-all hover:cursor-pointer  ${
-                    loginDetails.accountType === 'Instructor' ? 'bg-richblack-900 text-white' : 'text-white/70'
-                    }`}
-                    onClick={() => setLoginDetails((prev)=>{return ({...prev, accountType:"Instructor"})})}
-                >
-                    Instructor
-                </div>
-                </div>
                 <div>
                     <p className='text-md text-richblack-100'>Email Address <span className='text-md text-pink-400'>*</span></p>
                     <input type='email' required placeholder='abcd@efgh.ijk' name='email' id='email' value={loginDetails.email} onChange={changeHandler} className='my-2 p-1 focus:outline-none text-white h-[40px] font-inter w-full bg-richblack-700 rounded-lg border border-richblack-800 focus:bg-richblack-800 focus:border-richblack-800 focus:shadow-[0px_1px_1px_rgb(255,255,0)]'/>
@@ -76,6 +58,7 @@ const Login = () => {
                         <p className='text-md font-bold '>sign in</p>
                     </div>
                 </button>
+                <Link to='/signup' className='text-blue-50 hover:text-blue-200 transition-all hover:underline'>Do not have an account? Sign up</Link>
             </form>
             <div className='relative w-[40%]'>
                 <img src={LoginImage} alt='Login Image' className='absolute -top-5 -left-5 '/>

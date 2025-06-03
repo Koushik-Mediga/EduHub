@@ -5,7 +5,7 @@ const User = require('../models/User');
 //auth
 exports.auth = async (req, res, next)=>{
     try{
-        const token = req.cookies.token || req.body.token;
+        const token = req.header("Authorization").replace("Bearer ", "") || req.cookies?.token || req.body?.token;
         if(!token){
             return res.status(401).json({
                 success:false,
@@ -15,7 +15,6 @@ exports.auth = async (req, res, next)=>{
 
         try{
             const decode = await jwt.verify(token, process.env.JWT_SECRET);
-            console.log(decode);
             req.user = decode;
         }
         catch(err){
@@ -28,7 +27,7 @@ exports.auth = async (req, res, next)=>{
     }catch(e){
         return res.status(401).json({
             success: false,
-            message:"Something went wrong while validating the token",
+            message:e.message,
         });
     }
 }

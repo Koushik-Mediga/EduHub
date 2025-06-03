@@ -2,29 +2,30 @@ const express = require('express');
 const router = express.Router();
 
 const {createCategory, showAllCategories, categoryPageDetails} = require('../controllers/Category');
-const {createCourse, showAllCourses, getCourseDetails} = require('../controllers/Course');
+const {createCourse, showAllCourses, getCourseDetails, getMyCourses} = require('../controllers/Course');
 const {createRatingAndReview, getAverageRating, getAllRating} = require('../controllers/RatingAndReview');
 const {createSection, updateSection, deleteSection} = require('../controllers/Section');
 const {createSubSection, updateSubSection, deleteSubSection} = require('../controllers/SubSection');
 const {auth, isStudent, isAdmin, isInstructor} = require('../middlewares/auth');
-router.post('/createCourse', auth, isInstructor, createCourse);
-router.get('/showAllCourses', showAllCourses);
-router.get('/getCourseDetails', getCourseDetails);
+router.post('/createcourse', auth, isInstructor, createCourse);
+router.get('/getmycourses', auth, isInstructor, getMyCourses);
+router.get('/showallcourses', showAllCourses);
+router.get('/getcoursedetails', getCourseDetails);
 
-router.post('/createCategory', auth, isAdmin, createCategory);
-router.get('/showAllCategories', showAllCategories);
-router.get('/getCategoryPageDetails', categoryPageDetails);
+router.post('/createcategory', auth, isAdmin, createCategory);
+router.get('/showallcategories', showAllCategories);
+router.get('/getcategorypagedetails', categoryPageDetails);
 
-router.post('/createRatingAndReview', auth, isStudent, createRatingAndReview);
-router.get('/getAverageRating', getAverageRating);
-router.get('/getAllRating', getAllRating);
+router.post('/createratingandreview', auth, isStudent, createRatingAndReview);
+router.get('/getaveragerating', getAverageRating);
+router.get('/getallrating', getAllRating);
 
-router.post('/createSection', auth, isInstructor, createSection);
-router.put('/updateSection', auth, isInstructor, updateSection);
-router.delete('/deleteSection', auth, isInstructor, deleteSection);
+router.post('/createsection', auth, isInstructor, createSection);
+router.put('/updatesection', auth, isInstructor, updateSection);
+router.delete('/deletesection', auth, isInstructor, deleteSection);
 
-router.post('/createSubSection', auth, isInstructor, createSubSection);
-router.put('/updateSubSection', auth, isInstructor, updateSubSection);
-router.delete('/deleteSubSection', auth, isInstructor, deleteSubSection);
+router.post('/createsubsection', auth, isInstructor, createSubSection);
+router.put('/updatesubsection', auth, isInstructor, updateSubSection);
+router.delete('/deletesubsection', auth, isInstructor, deleteSubSection);
 
 module.exports = router;

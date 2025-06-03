@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require("dotenv").config();
 const mailSender = require('../utils/mailSender');
+const {otpSignupMailTemplate, deleteAccountMailTemplate, accountRegisteredMailTemplate} = require('../utils/mailTemplates');
 
 //OTP creation for an email
 exports.sendOTP = async (req, res)=>{
@@ -15,7 +16,7 @@ exports.sendOTP = async (req, res)=>{
         const existingUser = await User.findOne({email});
 
         if(existingUser){
-            return res.status(401).json({
+            return res.status(409).json({
                 success:false,
                 message:"User already exists"
             });
@@ -39,7 +40,7 @@ exports.sendOTP = async (req, res)=>{
         return res.status(200).json({
             success:true,
             message:"OTP sent successfully",
-        });
+        }); 
     }catch(e){
         console.log("Error occurred while sending OTP ", e);
         res.status(500).json({
@@ -62,7 +63,7 @@ exports.signup = async (req, res)=>{
 
         const existingUser = await User.findOne({email});
         if(existingUser){
-            return res.status(401).json({
+            return res.status(409).json({
                 success: false,
                 message:"User already exists"
             });
@@ -77,7 +78,7 @@ exports.signup = async (req, res)=>{
 
         const recentOtp = await OTP.find({email}).sort({createdAt:-1}).limit(1);
         if(recentOtp.length == 0){
-            return res.status(400).json({
+            return res.status(404).json({
                 success: false,
                 message:"OTP not found"
             });
@@ -96,6 +97,8 @@ exports.signup = async (req, res)=>{
         const profileDetails = await Profile.create({gender:null, dateOfBirth:null, about:null, contactNumber:contactNumber});
 
         const user = await User.create({firstName, lastName, email, password:hashedPassword, accountType, additionalDetails:profileDetails._id, courses:[], image:`https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`, courseProgress:[]})
+
+        await mailSender(email, "Account Created Successfully", accountRegisteredMailTemplate(firstName))
 
         return res.status(200).json({
             success:true,
@@ -117,7 +120,7 @@ exports.login = async (req, res)=>{
         const {email, password} = req.body;
 
         if(!email || !password){
-            return res.status(403).json({
+            return res.status(400).json({
                 success: false,
                 message: "All fields are required",
             });
@@ -152,7 +155,10 @@ exports.login = async (req, res)=>{
         existingUser.password = undefined;
 
         const options = {
-            expires: new Date(Date.now() + 3*24*60*60*100)
+            expires: new Date(Date.now() + 3*24*60*60*1000),
+            httpOnly: true,
+            secure: true,
+            sameSite: 'Lax'
         }
         res.cookie("token", token, options).status(200).json({
             success:true,
@@ -170,5 +176,40 @@ exports.login = async (req, res)=>{
 
 //changePassword
 exports.changePassword = async (req, res)=>{
-
+    try{
+        const {email, password, newPassword}  = req.body;
+        if(!email || !password || !newPassword){
+            return res.status(400).json({
+                success:false,
+                message:"All fields are required"
+            });
+        }
+        const user = await User.findOne({email});
+        if(!user){
+            return res.status(404).json({
+                success:false,
+                message:"User not found",
+            });
+        }
+        const isPasswordMatched = await bcrypt.compare(password, user.password);
+        if(!isPasswordMatched){
+            return res.status(400).json({
+                success:false,
+                message:"Incorrect Password"
+            });
+        }
+        const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+        user.password = hashedNewPassword;
+        await user.save();
+        return res.status(200).json({
+            success:true,
+            message:"Password updated successfully"
+        });
+    } catch(e){
+        console.log("Error occurred in login ", e);
+        return res.status(500).json({
+            success: false,
+            message:"Error in login",
+        });
+    }
 }

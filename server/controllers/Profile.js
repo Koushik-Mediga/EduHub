@@ -3,6 +3,7 @@ const Profile = require('../models/Profile');
 const User = require('../models/User');
 const mailSender = require('../utils/mailSender');
 const {uploadImageToCloudinary} = require('../utils/imageUploader');
+const {deleteAccountMailTemplate} = require('../utils/mailTemplates');
 require('dotenv').config();
 
 exports.updateProfile = async (req, res)=>{
@@ -64,7 +65,7 @@ exports.deleteAccount = async (req, res)=>{
         const email = userDetails.email;
         const userName = userDetails.firstName;
         const updatedUserDetails = await User.findByIdAndDelete(userId);
-        await mailSender(email, "Account Deleted successfully", `<h1>Hello ${userName},</h1><br/><p>Your account is permanently deleted from StudyLearn.</p>`)
+        await mailSender(email, "Account Deleted successfully", deleteAccountMailTemplate(userDetails.firstName))
         return res.status(200).json({
             success:true,
             message:"Account deleted successfully",
@@ -82,6 +83,7 @@ exports.deleteAccount = async (req, res)=>{
 exports.updateDisplayPicture = async (req, res)=>{
     try {
         const userId = req.user.id;
+        console.log(req.files);
         const pp = req.files.file;
         if(!pp){
             return res.status(400).json({

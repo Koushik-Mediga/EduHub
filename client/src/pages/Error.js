@@ -2,10 +2,10 @@ import React from 'react'
 import { FaRegFrown } from "react-icons/fa";
 import { useLocation } from 'react-router-dom';
 
-const Error = () => {
+const Error = (props) => {
   const location = useLocation();
-  const {errorStatus, errorMessage} = location.state || {};
-
+  const errorStatus = location.state?.errorStatus ?? props.errorStatus;
+  const errorMessage = location.state?.errorMessage ?? props.errorMessage;
   return (
     <div className='w-screen h-screen absolute top-0 left-0 flex flex-col justify-center items-center gap-5 text-white'>
         <FaRegFrown className=' text-[150px]'/>

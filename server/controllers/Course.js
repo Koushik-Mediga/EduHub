@@ -122,3 +122,26 @@ exports.getCourseDetails = async (req, res)=>{
         })
     }
 }
+
+exports.getMyCourses = async (req, res)=>{
+    try {
+        const userId = req.user.id;
+        const courses = await Course.find({instructor:userId});
+        if(!courses){
+            return res.status(404).json({
+                success:false,
+                message:"No courses found"
+            });
+        }
+        return res.status(200).json({
+            success:true,
+            message:"All courses fetched successfully",
+            courses
+        })
+    } catch (error) {
+        return res.status(500).json({
+            message:error.message,
+            success:false,
+        })
+    }
+}

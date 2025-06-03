@@ -3,8 +3,10 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
-    overflow-x: hidden;
+
+html,
+body {
+  overflow-x: hidden;
 }
 
 .bg-image-2{
