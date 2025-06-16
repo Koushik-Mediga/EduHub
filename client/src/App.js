@@ -16,6 +16,12 @@ import Settings from "./components/core/Dashboard/Settings";
 import DeleteAccountModal from "./components/common/DeleteAccountModal";
 import UpdateProfilePictureModal from "./components/common/UpdateProfilePictureModal";
 import Mycourses from "./components/core/Dashboard/Mycourses";
+import AddCourses from "./components/core/Dashboard/AddCourse/AddCourses";
+import AddLecture from "./components/core/Dashboard/AddCourse/AddLecture";
+import DeleteCourse from "./components/core/Dashboard/AddCourse/DeleteCourse";
+import ResetPassword from "./pages/ResetPassword";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
 
 
 function App() {
@@ -27,16 +33,22 @@ function App() {
       <Route path="/" element={<Home/>}></Route>
       <Route path="/login" element={<Login/>}></Route>
       <Route path="/signup" element={<Signup/>}></Route>
+      <Route path="/reset-password/:id" element={<ResetPassword/>}></Route>
+      <Route path="/about" element={<About/>}></Route>
+      <Route path="/contact" element={<Contact/>}></Route>
       <Route path="/error" element={<Error/>}></Route>
       <Route path="/verifyotp" element={<OtpPage/>}></Route>
       <Route path="/changepassword" element={<ChangePassword/>}></Route>
       <Route path="/dashboard" element={<PrivateRoute><Dashboard/></PrivateRoute>}>
         <Route path="my-profile" index element={<MyProfile/>}></Route>
+        <Route path="add-course" element={<AddCourses/>} />
         <Route path="logout" element={<LogoutBox/>}></Route>
         <Route path="settings" element={<Settings/>}></Route>
         <Route path="deleteaccount" element={<DeleteAccountModal/>}></Route>
         <Route path="updateprofilepicture" element={<UpdateProfilePictureModal/>}></Route>
         <Route path="my-courses" element={<Mycourses/>}></Route>
+        <Route path="editsection/:id" element={<AddLecture/>}></Route>
+        <Route path="deletecourse" element={<DeleteCourse/>}></Route>
       </Route>
       <Route path="*" element={<Error errorMessage="Page Not Found" errorStatus="404"/>}></Route>
     </Routes>

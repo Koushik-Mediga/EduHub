@@ -166,3 +166,25 @@ export const changePassword = async (navigate, {email, password, newPassword, to
         })
     }
 }
+
+export const resetPasswordToken  = async ({email})=>{
+    const toastId = toast.loading("Loading...");
+    try {
+        const response = await apiConnector("POST", authEndpoints.RESET_PASSWORD_TOKEN, {email}, null, null );
+        toast.success("Password Reset link is sent to your registered email, please check.", {id:toastId});
+    } catch (error) {
+        console.log(error.response);
+        toast.error(error.response.message, {id:toastId});
+    }
+}
+
+export const resetPassword = async({token, password, confirmPassword})=>{
+    const toastId = toast.loading("Loading...");
+    try {
+        const response = await apiConnector("POST", authEndpoints.RESET_PASSWORD, {token, password, confirmPassword}, null, null );
+        toast.success("Password Reset Successfully", {id:toastId});
+    } catch (error) {
+        console.log(error.response);
+        toast.error(error.response.message, {id:toastId});
+    }
+}

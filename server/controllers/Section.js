@@ -13,6 +13,12 @@ exports.createSection = async (req, res)=>{
         }
 
         const courseDetails = await Course.findOne({_id:courseId});
+        if(!courseDetails){
+            return res.status(404).json({
+                success:false,
+                message:"Course not found with the given id"
+            })
+        }
         const instructorId = courseDetails.instructor;
         const userId = req.user.id;
         console.log("Instructor id: ", instructorId, " userId : ", userId);
@@ -23,24 +29,30 @@ exports.createSection = async (req, res)=>{
             });
         }
 
-        const newSection = await Section.create({sectionName, subSection:[]});
-        const updatedCourseDetails = await Course.findOneAndUpdate({_id:courseId}, {$push:{courseContent: newSection._id}}, {new:true}).populate({
-				path: "courseContent",
-				populate: {
-					path: "subSection",
-				},
-			})
-			.exec();
-        return res.status(200).json({
+        const newSection = await Section.create({ sectionName, subSection: [] });
+
+        courseDetails.courseContent.push(newSection._id);
+        await courseDetails.save();
+
+        const updatedCourseDetails = await Course.findById(courseId)
+        .populate({ path: "instructor", populate: { path: "additionalDetails" } })
+        .populate("category")
+        .populate("ratingAndReviews")
+        .populate({
+            path: "courseContent",
+            populate: { path: "subSection" },
+        });
+      return res.status(200).json({
             success:true,
-            updatedCourseDetails,
+            course:updatedCourseDetails,
+            section: newSection,
             message:"Section created successfully",
         });
     } catch (error) {
-        console.log("Something went wrong in the create section handler");
+        console.log(error.message);
         return res.status(500).json({
             success:false,
-            message:"Something went wrong while creating the section",
+            message:error.message,
         });
     }
 }
@@ -66,10 +78,18 @@ exports.updateSection = async (req, res)=>{
         }
 
         const updatedSectionDetails = await Section.findOneAndUpdate({_id:sectionId}, {sectionName}, {new:true});
+        const course = await Course.findOne({_id:courseId}).populate({ path: "instructor", populate: { path: "additionalDetails" } })
+        .populate("category")
+        .populate("ratingAndReviews")
+        .populate({
+            path: "courseContent",
+            populate: { path: "subSection" },
+        });
         return res.status(200).json({
             success:true,
             message:"Section updated successfully",
-            updatedSectionDetails,
+            section: updatedSectionDetails,
+            course
         });
 
     } catch (error) {
@@ -87,7 +107,7 @@ exports.deleteSection = async (req, res)=>{
         if(!sectionId){
             return res.status(404).json({
                 success:false,
-                message:"All fields are required"
+                message:"Section Not Found"
             });
         }
 
@@ -97,21 +117,35 @@ exports.deleteSection = async (req, res)=>{
         if(!instructorId.equals(userId)){
             return res.status(401).json({
                 success:false,
-                message:"Only the creator of this course can update the section",
+                message:"Only the creator of this course can delete the section",
             });
         }
+        const section = await Section.findOne({_id:sectionId});
+        await SubSection.deleteMany({ _id: { $in: section.subSection } });
 
-        const section = await Section.findOneAndDelete({_id:sectionId});
+        const course = await Course.findOneAndUpdate({_id:courseId}, {
+            $pull: { courseContent: sectionId },
+        }, {new: true}).populate({ path: "instructor", populate: { path: "additionalDetails" } })
+        .populate("category")
+        .populate("ratingAndReviews")
+        .populate({
+            path: "courseContent",
+            populate: { path: "subSection" },
+        });
+
+        await Section.findOneAndDelete({_id:sectionId});
+
         return res.status(200).json({
             success:true,
-            message:"Section deleted successfully"
+            message:"Section deleted successfully",
+            course
         });
 
     } catch (error) {
-        console.log("Something went wrong in the delete section handler");
+        console.log(e.message);
         return res.status(500).json({
             success:false,
-            message:"Unable to delete, Something went wrong while deleting the section",
+            message:e.message,
         });
     }
 }

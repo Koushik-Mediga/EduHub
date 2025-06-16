@@ -5,9 +5,13 @@ import { IoMdPerson } from "react-icons/io";
 import { CiShoppingCart } from "react-icons/ci";
 import { MdMenuBook } from "react-icons/md";
 import { PiChalkboardTeacherBold } from "react-icons/pi";
-import { BiBookAdd } from "react-icons/bi";
+import { IoMdAdd } from "react-icons/io";
 import { IoSettingsOutline } from "react-icons/io5";
 import { TbLogout } from "react-icons/tb";
+import { ImBooks } from "react-icons/im";
+
+
+
 
 const Sidebar = () => {
     const user = useSelector((state)=>state.profile.user);
@@ -38,11 +42,11 @@ const Sidebar = () => {
                         <p>My Profile</p>
                     </Link>
                     <Link to={'/dashboard/my-courses'} className={`pl-2 flex flex-row gap-1 items-center hover:text-white transition-all ${(location.pathname==='/dashboard/my-courses')?('border-l-2 text-yellow-50 border-l-yellow-50'):('text-richblack-25')}`}>
-                        <PiChalkboardTeacherBold />
+                        <ImBooks />
                         <p>My Courses</p>
                     </Link>
                     <Link to={'/dashboard/add-course'} className={`pl-2 flex flex-row gap-1 items-center hover:text-white transition-all ${(location.pathname==='/dashboard/add-course')?('border-l-2 text-yellow-50 border-l-yellow-50'):('text-richblack-25')}`}>
-                        <BiBookAdd />
+                        <IoMdAdd />
                         <p>Add Course</p>
                     </Link>
                 </div>

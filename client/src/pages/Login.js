@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import LoginImage from '../assets/Images/login.webp'
 import FrameImage from '../assets/Images/frame.png'
 import { Link } from 'react-router-dom'
 import { FaRegEye } from "react-icons/fa"
 import { FaRegEyeSlash } from "react-icons/fa"
 import { useState } from 'react'
-import { login } from '../services/operations/authApi'
-import { useDispatch } from 'react-redux'
+import { login, resetPasswordToken } from '../services/operations/authApi'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 
@@ -16,11 +16,23 @@ const Login = () => {
     const dispatch = useDispatch();
     const [loginDetails, setLoginDetails] = useState({email:"", password:""});
     const navigate = useNavigate();
+    const token = useSelector((state)=>state.auth.token);
+    
+    useEffect(()=>{
+        if (token){
+            navigate('/dashboard/my-profile');
+            return ;
+        }
+    }, []);
 
     const changeHandler = (event)=>{
         setLoginDetails((prev)=>{
             return ({...prev, [event.target.name]:event.target.value})
         })
+    }
+
+    const forgotPasswordHandler = async ()=>{
+        await resetPasswordToken({ email: loginDetails.email });
     }
 
     const submitHandler = (event)=>{
@@ -50,7 +62,7 @@ const Login = () => {
                         {
                             (showPassword)?<FaRegEyeSlash onClick={showPasswordClickHandler} className='text-richblack-400 absolute right-3 top-5 hover:cursor-pointer transition-all hover:text-richblack-25'/>:<FaRegEye onClick={showPasswordClickHandler} className='text-richblack-400 absolute right-3 top-5 hover:cursor-pointer transition-all hover:text-richblack-25'/>
                         }
-                        <div className='flex flex-row-reverse w-full'><Link to={'/resetPassword'} className='text-blue-50 hover:text-blue-200 transition-all hover:underline'>forgot password</Link></div>
+                        <div className='flex flex-row-reverse w-full'><Link onClick={forgotPasswordHandler} className='text-blue-50 hover:text-blue-200 transition-all hover:underline'>forgot password</Link></div>
                     </div>
                 </div>
                 <button>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaArrowRight } from 'react-icons/fa'
+import { FaArrowRight, FaSpinner } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import Button from '../components/core/HomePage/Button'
 import Banner from '../assets/Images/banner.mp4'
@@ -8,6 +8,7 @@ import TimelineSection from '../components/core/HomePage/TimelineSection'
 import LearningLanguagesSection from '../components/core/HomePage/LearningLanguagesSection'
 import Instructor from '../assets/Images/Instructor.png'
 import Footer from '../components/common/Footer'
+import {ClipLoader} from 'react-spinners';
 
 const Home = () => {
   return (

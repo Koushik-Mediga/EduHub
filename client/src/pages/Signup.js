@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SignupImage from '../assets/Images/signup.webp';
 import FrameImage from '../assets/Images/frame.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { sendOtp } from '../services/operations/authApi';
 import toast from 'react-hot-toast';
 
@@ -13,7 +13,15 @@ const Signup = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [signupDetails, setSignupDetails] = useState({email:"", password:"", confirmPassword:"", accountType:"Student", firstName:"", lastName:"", contactNumber:""})
-    
+    const token = useSelector((state)=>state.auth.token);
+
+    useEffect(()=>{
+        if(token){
+            navigate("/dashboard/my-profile");
+            return ;
+        }
+    }, []);
+
     const changeHandler = (event)=>{
         setSignupDetails((prev)=>{
             return ({...prev, [event.target.name]:event.target.value})

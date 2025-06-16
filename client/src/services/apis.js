@@ -8,7 +8,9 @@ export const authEndpoints = {
     LOGIN_API: BASE_URL + "auth/login",
     SIGNUP_API: BASE_URL + "auth/signup",
     SENDOTP_API: BASE_URL + "auth/sendotp",
-    CHANGEPASSWORD_API: BASE_URL + "auth/changepassword"
+    CHANGEPASSWORD_API: BASE_URL + "auth/changepassword",
+    RESET_PASSWORD_TOKEN: BASE_URL + "auth/resetpasswordtoken",
+    RESET_PASSWORD: BASE_URL + "auth/resetpassword",
 }
 
 export const profileEndPoints = {
@@ -20,6 +22,7 @@ export const profileEndPoints = {
 
 export const courseEndPoints = {
     CREATE_COURSE: BASE_URL + "course/createcourse",
+    UPDATE_COURSE: BASE_URL + "course/updatecourse",
     GET_MY_COURSES: BASE_URL + "course/getmycourses",
     SHOW_ALL_COURSES: BASE_URL + "course/showallcourses",
     GET_COURSE_DETAILS: BASE_URL +  "course/getcoursedetails",
@@ -32,4 +35,8 @@ export const courseEndPoints = {
     UPDATE_SUB_SECTION: BASE_URL + "course/updatesubsection",
     DELETE_SUB_SECTION: BASE_URL + "course/deletesubsection",
 
+}
+
+export const contactusEndpoint = {
+  CONTACT_US_API: BASE_URL + "/reach/contact",
 }
