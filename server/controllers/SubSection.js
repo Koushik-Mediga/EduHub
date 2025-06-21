@@ -21,6 +21,7 @@ exports.createSubSection = async (req, res)=>{
                 message:"Error occured while uploading image",
             });
         }
+        console.log(uploadDetails);
 
         const newSubSection = await SubSection.create({title, timeDuration, description, videoUrl:uploadDetails.secure_url});
 

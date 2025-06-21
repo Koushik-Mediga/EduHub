@@ -145,3 +145,27 @@ exports.getUserDetails = async (req, res)=>{
         });
     }
 }
+
+exports.getUserEnrolledCourses = async (req, res)=>{
+    try {
+        const userId = req.user.id;
+        const userDetails = await User.findOne({_id:userId}).populate("courses");
+        if(!userDetails){
+            return res.status(404).json({
+                success:false,
+                message:"User not found"
+            });
+        }
+        return res.status(200).json({
+            success:true,
+            message:"Enrolled Courses fetched successfully",
+            courses:userDetails.courses
+        });
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({
+            success:false,
+            message:error.message,
+        });
+    }
+}

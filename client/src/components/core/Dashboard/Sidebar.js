@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 import { IoMdPerson } from "react-icons/io";
-import { CiShoppingCart } from "react-icons/ci";
+import { IoCartSharp } from "react-icons/io5";
 import { MdMenuBook } from "react-icons/md";
 import { PiChalkboardTeacherBold } from "react-icons/pi";
 import { IoMdAdd } from "react-icons/io";
@@ -26,12 +26,12 @@ const Sidebar = () => {
                         <IoMdPerson />
                         <p>My Profile</p>
                     </Link>
-                    <Link to='/dashboard/enrolled-courses' className={`pl-2 flex flex-row gap-1 items-center hover:text-white transition-all ${(location.pathname==='/dashboard/my-courses')?('border-l-2 text-yellow-50 border-l-yellow-50'):('text-richblack-25')}`}>
+                    <Link to='/dashboard/enrolled-courses' className={`pl-2 flex flex-row gap-1 items-center hover:text-white transition-all ${(location.pathname==='/dashboard/enrolled-courses')?('border-l-2 text-yellow-50 border-l-yellow-50'):('text-richblack-25')}`}>
                         <MdMenuBook />
                         <p>Enrolled Courses</p>
                     </Link>
-                    <Link to={'/cart'} className={`pl-2 flex flex-row gap-1 items-center hover:text-white transition-all ${(location.pathname==='/dashboard/add-course')?('border-l-2 text-yellow-50 border-l-yellow-50'):('text-richblack-25')}`}>
-                        <CiShoppingCart />
+                    <Link to={'/dashboard/cart'} className={`pl-2 flex flex-row gap-1 items-center hover:text-white transition-all ${(location.pathname==='/dashboard/cart')?('border-l-2 text-yellow-50 border-l-yellow-50'):('text-richblack-25')}`}>
+                        <IoCartSharp />
                         <p>Cart</p>
                     </Link>
                 </div>

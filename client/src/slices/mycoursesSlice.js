@@ -3,7 +3,7 @@ import {toast} from 'react-hot-toast'
 
 
 const initialState = {
-    courses: localStorage.getItem("myCourses")? JSON.parse(localStorage.getItem("myCourses")):[]
+    courses:[]
 };
 
 const mycoursesSlice = createSlice({

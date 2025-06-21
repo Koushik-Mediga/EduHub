@@ -22,6 +22,11 @@ import DeleteCourse from "./components/core/Dashboard/AddCourse/DeleteCourse";
 import ResetPassword from "./pages/ResetPassword";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses";
+import InstructorRoute from "./components/core/Auth/InstructorRoute";
+import StudentRoute from "./components/core/Auth/StudentRoute";
+import Cart from "./components/core/Dashboard/Cart";
+import Catalog from "./pages/Catalog";
 
 
 function App() {
@@ -31,6 +36,7 @@ function App() {
     <Navbar/>
     <Routes>
       <Route path="/" element={<Home/>}></Route>
+      <Route path="/catalog/:catalogName" element={<Catalog/>}></Route>
       <Route path="/login" element={<Login/>}></Route>
       <Route path="/signup" element={<Signup/>}></Route>
       <Route path="/reset-password/:id" element={<ResetPassword/>}></Route>
@@ -41,14 +47,16 @@ function App() {
       <Route path="/changepassword" element={<ChangePassword/>}></Route>
       <Route path="/dashboard" element={<PrivateRoute><Dashboard/></PrivateRoute>}>
         <Route path="my-profile" index element={<MyProfile/>}></Route>
-        <Route path="add-course" element={<AddCourses/>} />
+        <Route path="add-course" element={<InstructorRoute><AddCourses/></InstructorRoute>} />
+        <Route path="my-courses" element={<InstructorRoute><Mycourses/></InstructorRoute>}></Route>
+        <Route path="editsection/:id" element={<InstructorRoute><AddLecture/></InstructorRoute>}></Route>
+        <Route path="deletecourse" element={<InstructorRoute><DeleteCourse/></InstructorRoute>}></Route>
         <Route path="logout" element={<LogoutBox/>}></Route>
         <Route path="settings" element={<Settings/>}></Route>
         <Route path="deleteaccount" element={<DeleteAccountModal/>}></Route>
         <Route path="updateprofilepicture" element={<UpdateProfilePictureModal/>}></Route>
-        <Route path="my-courses" element={<Mycourses/>}></Route>
-        <Route path="editsection/:id" element={<AddLecture/>}></Route>
-        <Route path="deletecourse" element={<DeleteCourse/>}></Route>
+        <Route path="enrolled-courses" element={<StudentRoute><EnrolledCourses/></StudentRoute>}></Route>
+        <Route path="cart" element={<StudentRoute><Cart/></StudentRoute>}></Route>
       </Route>
       <Route path="*" element={<Error errorMessage="Page Not Found" errorStatus="404"/>}></Route>
     </Routes>

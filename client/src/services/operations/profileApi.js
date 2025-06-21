@@ -7,7 +7,6 @@ import toast from "react-hot-toast";
 export const getUserDetails = async (token, dispatch, navigate)=>{
     const toastId = toast.loading("Loading...");
     try {
-        console.log(token);
         const response = await apiConnector("GET", profileEndPoints.GETUSERDETAILS, null, {Authorization: `Bearer ${token}`}, null);
         dispatch(setUser(response.data.user));
         toast.dismiss(toastId);
@@ -133,5 +132,17 @@ export const updateProfilePicture = async (profilePicture, token, dispatch, navi
                 errorStatus:e.status || 500,
             }
         })
+    }
+}
+
+export const getUserEnrolledCourses = async (token, dispatch)=>{
+    const toastId = toast.loading("Loading...");
+    try {
+        const courses = await apiConnector("GET", profileEndPoints.GET_USER_ENROLLED_COURSES, null, {Authorization: `Bearer ${token}`}, null);
+        toast.dismiss(toastId);
+        return courses;
+    } catch (error) {
+        console.log(error.response);
+        toast.error(error.message, {id:toastId});
     }
 }

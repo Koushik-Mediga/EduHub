@@ -52,8 +52,8 @@ const Navbar = () => {
                                         <p>{link.title} </p> 
                                         <IoIosArrowDown className='text-richblack-25 text-center mt-1 hover:cursor-pointer transition-all group-hover:rotate-180' />
                                         <div className='invisible z-50 absolute top-[7%]  flex flex-col rounded-md bg-richblack-700 p-4 text-richblack-800 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-90 lg:w-[300px]'>
-                                            <Link to={"/course/python"} className='hover:text-blue-50 hover:underline text-white'><p>python</p></Link>
-                                            <Link to={"/course/webDev"}><p className='hover:text-blue-50 hover:underline text-white'>Web Development</p></Link>
+                                            <Link to={"/catalog/python"} className='hover:text-blue-50 hover:underline text-white'><p>python</p></Link>
+                                            <Link to={"/catalog/webDev"}><p className='hover:text-blue-50 hover:underline text-white'>Web Development</p></Link>
                                         </div>
                                     </div>
                                 )

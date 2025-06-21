@@ -17,12 +17,14 @@ export const profileEndPoints = {
     GETUSERDETAILS: BASE_URL + "profile/getuserdetails",
     DELETE_ACCOUNT: BASE_URL + "profile/deleteaccount",
     UPDATE_PROFILE: BASE_URL + "profile/updateprofile",
-    UPDATE_PROFILE_PICTURE: BASE_URL + "profile/updatedisplaypicture"
+    UPDATE_PROFILE_PICTURE: BASE_URL + "profile/updatedisplaypicture",
+    GET_USER_ENROLLED_COURSES: BASE_URL + "profile/enrolledcourses",
 }
 
 export const courseEndPoints = {
     CREATE_COURSE: BASE_URL + "course/createcourse",
     UPDATE_COURSE: BASE_URL + "course/updatecourse",
+    DELETE_COURSE: BASE_URL + "course/deletecourse",
     GET_MY_COURSES: BASE_URL + "course/getmycourses",
     SHOW_ALL_COURSES: BASE_URL + "course/showallcourses",
     GET_COURSE_DETAILS: BASE_URL +  "course/getcoursedetails",

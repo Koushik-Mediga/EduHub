@@ -8,6 +8,7 @@ import { RxCaretDown } from "react-icons/rx";
 import { MdEdit, MdDelete} from "react-icons/md";
 import { useLocation } from 'react-router-dom';
 import { FaBullseye } from 'react-icons/fa6';
+import Button from '../../HomePage/Button';
 
 
 
@@ -91,7 +92,7 @@ const CourseBuilderForm = () => {
                                                 <div className='pl-4 py-2 w-full flex flex-col items-end gap-1'>
                                                     {item.subSection.map((lecture, subIndex) => (
                                                         <div className='p-1 w-full flex flex-row gap-3 border-b border-richblack-600'>
-                                                            <video src={lecture.videoUrl} autoPlay muted controls={false} className='h-auto w-1/3'/>
+                                                            <video src={lecture.videoUrl} muted controls={true} className='h-auto w-1/3'/>
                                                             <div className=' flex flex-col w-full'>
                                                                 <div className='flex flex-row justify-between items-center w-full'>
                                                                     <p className='text-lg text-richblack-25'>{lecture.title}</p>
@@ -105,12 +106,12 @@ const CourseBuilderForm = () => {
                                                             </div>
                                                         </div>
                                                     ))}
-                                                    <button onClick={()=>{dispatch(setEditLecture(false));dispatch(setEditSections(false));navigate(`/dashboard/editsection/${item._id}`)}} className='text-yellow-400 underline text-sm'>Add Lecture</button>
+                                                    <button onClick={()=>{dispatch(setEditLecture(false));dispatch(setEditSections(false));navigate(`/dashboard/editsection/${item._id}`)}} className='text-yellow-400 text-sm hover:text-yellow-50 transition-all'>Add Lecture</button>
                                                 </div>
                                             ) : (
                                                 <div className='pl-4 py-2'>
                                                     <p className='text-gray-400'>No lectures are present</p>
-                                                    <button onClick={()=>{dispatch(setEditLecture(false));dispatch(setEditSections(false));navigate(`/dashboard/editsection/${item._id}`)}} className='text-yellow-400 underline text-sm'>Add Lecture</button>
+                                                    <button onClick={()=>{dispatch(setEditLecture(false));dispatch(setEditSections(false));navigate(`/dashboard/editsection/${item._id}`)}} className='text-yellow-400 hover:text-yellow-50 transition-all text-sm'>Add Lecture</button>
                                                 </div>
                                             )
                                         )

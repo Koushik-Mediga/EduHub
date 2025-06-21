@@ -3,6 +3,7 @@ import { apiConnector } from "../apiconnector";
 import { setMyCourses } from "../../slices/mycoursesSlice";
 import { setStep, setCourse, setEditCourse, setEditSections, setEditLecture } from "../../slices/courseSlice";
 import toast from "react-hot-toast";
+import { getUserDetails } from "./profileApi";
 export const getMyCourses = async (token, dispatch, navigate)=>{
     try{
         const response = await apiConnector("GET", courseEndPoints.GET_MY_COURSES, null, {Authorization: `Bearer ${token}`}, null);
@@ -39,6 +40,29 @@ export const updateCourse = async (formData, token, dispatch)=>{
         toast.success("Course Updated successfully", {id:toastId});
     }catch(error){
         toast.error("Something went wrong while creating a course", {id:toastId});
+        console.log(error.response);
+    }
+}
+
+export const publishCourse = async ({courseId, token, dispatch})=>{
+    const toastId = toast.loading("Loading...");
+    try{
+        const response = await apiConnector("PUT", courseEndPoints.UPDATE_COURSE, {publishStatus:"published", courseId}, {Authorization: `Bearer ${token}`}, null);
+        toast.success("Course Published Successfully", {id:toastId});
+    }catch(error){
+        toast.error("Something went wrong while creating a course", {id:toastId});
+        console.log(error.response);
+    }
+}
+
+    export const deleteCourse = async ({courseId}, token, dispatch)=>{
+    const toastId = toast.loading("Loading...");
+    try{
+        const response = await apiConnector("DELETE", courseEndPoints.DELETE_COURSE, {courseId}, {Authorization: `Bearer ${token}`}, null);
+        getUserDetails(token, dispatch);
+        toast.success("Course Deleted Successfully", {id:toastId})
+    }catch(error){
+        toast.error(error.response.message, {id:toastId});
         console.log(error.response);
     }
 }

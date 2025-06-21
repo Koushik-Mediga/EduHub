@@ -142,7 +142,7 @@ const CourseInfoForm = () => {
             <div>
                 <button
                     type="submit"
-                    className="hover:cursor-pointer rounded-md w-[150px] h-[50px] flex justify-center items-center text-black bg-yellow-50 hover:scale-95 transition-all duration-200 gap-2"
+                    className="hover:cursor-pointer rounded-md w-full h-[50px] flex justify-center items-center text-black bg-yellow-50 hover:scale-95 transition-all duration-200 gap-2"
                     disabled={isSubmitting}
                     >
                     {isSubmitting ? (

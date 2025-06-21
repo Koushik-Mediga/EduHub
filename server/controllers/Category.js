@@ -59,11 +59,16 @@ exports.categoryPageDetails = async (req, res)=>{
         const differentCategories = await Category.find({
             _id: {$ne: categoryId},
         }).populate("courses").exec();
+
+        const allCategories = await Category.find().populate({path:"courses", match: {publishStatus:"published"}}).exec();
+        const allCourses = allCategories.flatMap((category)=>category.courses);
+        const mostSellingCourses = allCourses.sort((a,b)=>b.sold - a.sold).slice(0,10);
         return res.status(200).json({
             success:true,
             data:{
                 selectedCategory,
                 differentCategories,
+                mostSellingCourses,
             }
         });
     } catch (error) {
