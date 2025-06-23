@@ -8,7 +8,7 @@ import { FaShoppingCart } from "react-icons/fa";
 import ProfileDropDown from './ProfileDropDown';
 import Button from '../core/HomePage/Button';
 import { apiConnector } from '../../services/apiconnector';
-import { categories } from '../../services/apis';
+import { categoryEndPoints } from '../../services/apis';
 import { IoIosArrowDown } from "react-icons/io";
 
 
@@ -20,18 +20,15 @@ const Navbar = () => {
 
     const [subLinks, setSubLinks] = useState([]);
 
-    const fetchSubLinks = async ()=>{
+    useEffect(()=>{
+        const fetchSubLinks = async ()=>{
             try{
-                const result = await apiConnector("GET", categories.CATEGORIES_API);
-                console.log(user);
-                console.log(result);
+                const result = await apiConnector("GET", categoryEndPoints.CATEGORIES_API);
                 setSubLinks(result.data.categories);
             }catch(e){
                 console.log(e)
             }
         }
-
-    useEffect(()=>{
         fetchSubLinks();
     }, [])
 
@@ -51,10 +48,16 @@ const Navbar = () => {
                                     <div className=' flex gap-1 items-center group hover:cursor-pointer overflow-hidden'>
                                         <p>{link.title} </p> 
                                         <IoIosArrowDown className='text-richblack-25 text-center mt-1 hover:cursor-pointer transition-all group-hover:rotate-180' />
-                                        <div className='invisible z-50 absolute top-[7%]  flex flex-col rounded-md bg-richblack-700 p-4 text-richblack-800 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-90 lg:w-[300px]'>
-                                            <Link to={"/catalog/python"} className='hover:text-blue-50 hover:underline text-white'><p>python</p></Link>
-                                            <Link to={"/catalog/webDev"}><p className='hover:text-blue-50 hover:underline text-white'>Web Development</p></Link>
+                                        <div className='invisible z-50 absolute top-[7%] grid grid-cols-2 gap-x-6 gap-y-3 rounded-md bg-richblack-25 p-4 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-90 lg:w-[500px]'>
+                                            {
+                                                subLinks.map((item, index) => (
+                                                    <Link key={index} to={`/catalog/${item._id}`}>
+                                                        <p className='hover:bg-richblack-100 rounded-lg p-2 transition-all text-richblack-700 whitespace-nowrap'>{item.name}</p>
+                                                    </Link>
+                                                ))
+                                            }
                                         </div>
+
                                     </div>
                                 )
                                 :

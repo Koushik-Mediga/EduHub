@@ -8,6 +8,7 @@ import { MdDelete, MdEdit } from "react-icons/md";
 import { setCourse, setEditCourse, setEditLecture, setEditSections, setStep } from '../../../slices/courseSlice'
 import { BsBookFill } from "react-icons/bs";
 import Button from '../HomePage/Button'
+import StarRating from '../../common/StarRating'
 
 
 
@@ -59,13 +60,7 @@ const Mycourses = () => {
                                 <p className='text-sm text-richblack-200'>{course.publishStatus}</p>
                                 <div className='flex flex-row justify-between items-center'>
                                     <p className=' text-caribbeangreen-400 text-lg'>Rs. {course.price}/-</p>
-                                    <StarRatings
-                                        rating={2.403}
-                                        starDimension="20px"
-                                        starSpacing="1px"
-                                        starRatedColor="#FFD60A"
-                                        starEmptyColor='#2C333F'
-                                    />
+                                    <StarRating rating={3.4} />
                                 </div>
                             </div>
                         </div>

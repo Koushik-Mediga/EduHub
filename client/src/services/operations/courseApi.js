@@ -1,9 +1,11 @@
-import { courseEndPoints } from "../apis";
+import { categoryEndPoints, courseEndPoints } from "../apis";
 import { apiConnector } from "../apiconnector";
 import { setMyCourses } from "../../slices/mycoursesSlice";
 import { setStep, setCourse, setEditCourse, setEditSections, setEditLecture } from "../../slices/courseSlice";
 import toast from "react-hot-toast";
 import { getUserDetails } from "./profileApi";
+
+
 export const getMyCourses = async (token, dispatch, navigate)=>{
     try{
         const response = await apiConnector("GET", courseEndPoints.GET_MY_COURSES, null, {Authorization: `Bearer ${token}`}, null);
@@ -13,6 +15,26 @@ export const getMyCourses = async (token, dispatch, navigate)=>{
         console.log(e.response);
     }
 }
+
+export const getCategoryPageDetails = async ({ categoryId, setCategoryDetails }) => {
+    const toastId = toast.loading("Loading...");
+    try {
+        const response = await apiConnector(
+            "GET",
+            categoryEndPoints.GET_CATEEGORY_PAGE_DETAILS,
+            null,              
+            null,             
+            { categoryId }      
+        );
+
+        setCategoryDetails(response?.data?.data);
+
+        toast.dismiss(toastId);
+    } catch (error) {
+        toast.error("Something went wrong while fetching category data", { id: toastId });
+        console.log(error?.response);
+    }
+};
 
 export const createCourse = async (formData, token, dispatch, navigate)=>{
     const toastId = toast.loading("Loading...");

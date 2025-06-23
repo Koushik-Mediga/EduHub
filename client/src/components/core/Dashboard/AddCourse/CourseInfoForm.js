@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiConnector } from '../../../../services/apiconnector';
-import { categories } from '../../../../services/apis';
+import { categoryEndPoints } from '../../../../services/apis';
 import { useNavigate } from 'react-router-dom';
 import { setStep } from '../../../../slices/courseSlice';
 import { createCourse } from '../../../../services/operations/courseApi';
@@ -30,7 +30,7 @@ const CourseInfoForm = () => {
 
     const fetchCategories = async ()=>{
         try{
-            const result = await apiConnector("GET", categories.CATEGORIES_API);
+            const result = await apiConnector("GET", categoryEndPoints.CATEGORIES_API);
             console.log(result);
             setAllCategories(result.data.categories);
         }catch(e){
@@ -142,7 +142,9 @@ const CourseInfoForm = () => {
             <div>
                 <button
                     type="submit"
-                    className="hover:cursor-pointer rounded-md w-full h-[50px] flex justify-center items-center text-black bg-yellow-50 hover:scale-95 transition-all duration-200 gap-2"
+                    className={`rounded-md w-full h-[50px] flex justify-center items-center text-black bg-yellow-50 transition-all duration-200 gap-2
+                        ${isSubmitting ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:scale-95'}
+                    `}                    
                     disabled={isSubmitting}
                     >
                     {isSubmitting ? (

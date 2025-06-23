@@ -36,7 +36,7 @@ function App() {
     <Navbar/>
     <Routes>
       <Route path="/" element={<Home/>}></Route>
-      <Route path="/catalog/:catalogName" element={<Catalog/>}></Route>
+      <Route path="/catalog/:id" element={<Catalog/>}></Route>
       <Route path="/login" element={<Login/>}></Route>
       <Route path="/signup" element={<Signup/>}></Route>
       <Route path="/reset-password/:id" element={<ResetPassword/>}></Route>
