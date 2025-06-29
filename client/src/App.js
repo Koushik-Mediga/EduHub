@@ -27,13 +27,29 @@ import InstructorRoute from "./components/core/Auth/InstructorRoute";
 import StudentRoute from "./components/core/Auth/StudentRoute";
 import Cart from "./components/core/Dashboard/Cart";
 import Catalog from "./pages/Catalog";
+import Course from "./pages/Course";
+import ScrollToTop from "./components/common/ScrollToTop";
+import { isTokenExpired } from "./utils/auth";
+import toast from "react-hot-toast";
+import ViewCourse from "./pages/ViewCourse";
+
+
 
 
 function App() {
 
+  const token = localStorage.getItem('token');
+
+  if (isTokenExpired(token)) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    toast.error("Session Expired, Login again");
+  }
+
   return (
    <div className="w-screen min-h-screen bg-richblack-900 font-inter flex flex-col">
     <Navbar/>
+    <ScrollToTop />
     <Routes>
       <Route path="/" element={<Home/>}></Route>
       <Route path="/catalog/:id" element={<Catalog/>}></Route>
@@ -42,9 +58,11 @@ function App() {
       <Route path="/reset-password/:id" element={<ResetPassword/>}></Route>
       <Route path="/about" element={<About/>}></Route>
       <Route path="/contact" element={<Contact/>}></Route>
+      <Route path="/course/:id" element={<Course/>}></Route>
       <Route path="/error" element={<Error/>}></Route>
       <Route path="/verifyotp" element={<OtpPage/>}></Route>
       <Route path="/changepassword" element={<ChangePassword/>}></Route>
+      <Route path="/view-course/:id" element={<StudentRoute><ViewCourse /></StudentRoute>}></Route>
       <Route path="/dashboard" element={<PrivateRoute><Dashboard/></PrivateRoute>}>
         <Route path="my-profile" index element={<MyProfile/>}></Route>
         <Route path="add-course" element={<InstructorRoute><AddCourses/></InstructorRoute>} />

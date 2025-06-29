@@ -5,10 +5,10 @@ const StarRating = ({ rating }) => {
   return (
     <StarRatings
       rating={rating}
-      starDimension="20px"
+      starDimension="15px"
       starSpacing="1px"
       starRatedColor="#FFD60A"
-      starEmptyColor="#2C333F"
+      starEmptyColor="#D3D3D3"
     />
   );
 }

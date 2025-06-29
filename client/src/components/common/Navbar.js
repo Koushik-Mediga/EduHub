@@ -72,14 +72,14 @@ const Navbar = () => {
                 </ul>
             </nav>
 
-            <div className='flex gap-6 flex-row justify-center items-center h-[100%]'>
+            <div className='relative flex gap-6 flex-row justify-center items-center h-[100%]'>
                 {
                     user && user?.accountType !=="Instructor" && (
                         <Link to="/dashboard/cart" className='relative'>
-                            <FaShoppingCart className='text-richblack-25 hover:text-white h-10'/>
+                            <FaShoppingCart className='text-richblack-25 text-lg hover:text-white h-10'/>
                             {
                                 totalItems > 0 && (
-                                    <span>{totalItems}</span>
+                                    <span className='bg-yellow-5 w-[15px] h-[15px] text-xs font-bold flex justify-center items-center text-black rounded-full absolute top-1 -right-2'>{totalItems}</span>
                                 )
                             }
                         </Link>

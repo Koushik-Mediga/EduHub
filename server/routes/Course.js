@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const {createCategory, showAllCategories, categoryPageDetails} = require('../controllers/Category');
-const {createCourse, showAllCourses, getCourseDetails, getMyCourses, updateCourse, deleteCourse} = require('../controllers/Course');
+const {createCourse, showAllCourses, getCourseDetails, getMyCourses, updateCourse, deleteCourse, getTopRatedCourses} = require('../controllers/Course');
 const {createRatingAndReview, getAverageRating, getAllRating} = require('../controllers/RatingAndReview');
 const {createSection, updateSection, deleteSection} = require('../controllers/Section');
 const {createSubSection, updateSubSection, deleteSubSection} = require('../controllers/SubSection');
@@ -13,6 +13,7 @@ router.delete('/deletecourse', auth, isInstructor, deleteCourse);
 router.get('/getmycourses', auth, isInstructor, getMyCourses);
 router.get('/showallcourses', showAllCourses);
 router.get('/getcoursedetails', getCourseDetails);
+router.get('/gettopratedcourses', getTopRatedCourses);
 
 router.post('/createcategory', auth, isAdmin, createCategory);
 router.get('/showallcategories', showAllCategories);

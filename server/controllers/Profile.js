@@ -149,7 +149,7 @@ exports.getUserDetails = async (req, res)=>{
 exports.getUserEnrolledCourses = async (req, res)=>{
     try {
         const userId = req.user.id;
-        const userDetails = await User.findOne({_id:userId}).populate("courses");
+        const userDetails = await User.findOne({_id:userId}).populate({path:"courses", populate:{path:"category"}});
         if(!userDetails){
             return res.status(404).json({
                 success:false,

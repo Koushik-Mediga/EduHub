@@ -146,7 +146,7 @@ exports.showAllCourses = async (req, res)=>{
 
 exports.getCourseDetails = async (req, res)=>{
     try {
-        const {courseId} = req.body;
+        const {courseId} = req.query;
         if(!courseId){
             return res.status(400).json({
                 success:false,
@@ -193,6 +193,26 @@ exports.getMyCourses = async (req, res)=>{
         return res.status(500).json({
             message:error.message,
             success:false,
+        })
+    }
+}
+
+exports.getTopRatedCourses = async (req, res)=>{
+    try{
+        const allCourses = await Course.find({publishStatus:"published"}).populate({path:"instructor"});
+        const mostSellingCourses = allCourses
+            .sort((a, b) => b.sold - a.sold)
+            .slice(0, 3);
+        return res.status(200).json({
+            success:true,
+            message:"Fetched most selling courses successfully",
+            courses:mostSellingCourses
+        });
+    }catch(e){
+        console.log(e);
+        return res.status(500).json({
+            success:false,
+            message:e.message
         })
     }
 }

@@ -1,10 +1,20 @@
 import React from 'react';
 import StarRating from '../../common/StarRating';
+import Footer from '../../common/Footer';
+import { useNavigate } from 'react-router-dom';
 
 const CourseCard = ({ course }) => {
+  
+      const navigate = useNavigate();
+  
+      function cardClickHandler(id){
+          navigate(`/course/${id}`);
+      }
+  
   return (
     <div
-      className="relative h-[250px] overflow-hidden rounded-xl group transition-all duration-300 shadow-md"
+      onClick={()=>{cardClickHandler(course._id)}} 
+      className="relative hover:cursor-pointer rounded-lg h-[250px] overflow-hidden group transition-all duration-300 shadow-md"
     >
       {/* Background Image */}
       <img
@@ -44,6 +54,7 @@ const CourseCard = ({ course }) => {
           </div>
         </div>
       </div>
+      
     </div>
   );
 };

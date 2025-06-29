@@ -29,6 +29,7 @@ export const courseEndPoints = {
     GET_MY_COURSES: BASE_URL + "course/getmycourses",
     SHOW_ALL_COURSES: BASE_URL + "course/showallcourses",
     GET_COURSE_DETAILS: BASE_URL +  "course/getcoursedetails",
+    GET_TOP_RATED_COURSES: BASE_URL + "course/gettopratedcourses",
 
     CREATE_SECTION: BASE_URL + "course/createsection",
     UPDATE_SECTION: BASE_URL + "course/updatesection",
@@ -42,4 +43,9 @@ export const courseEndPoints = {
 
 export const contactusEndpoint = {
   CONTACT_US_API: BASE_URL + "/reach/contact",
+}
+
+export const paymentEndpoints = {
+    VERIFY_PAYMENT_API: BASE_URL + "payment/verifypayment",
+    CAPTURE_PAYMENT_API: BASE_URL + "payment/capturepayment"
 }

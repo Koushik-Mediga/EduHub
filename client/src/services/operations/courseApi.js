@@ -16,6 +16,28 @@ export const getMyCourses = async (token, dispatch, navigate)=>{
     }
 }
 
+export const getCourseDetails = async ({courseId, setCourseDetails})=>{
+    try {
+        const response = await apiConnector("GET", courseEndPoints.GET_COURSE_DETAILS, null, null, {courseId});
+        setCourseDetails(response.data.courseDetails);
+    } catch (e) {
+        console.log(e.response);
+        toast.error(e.response.message)
+    }
+}
+
+export const getTopRatedCourses = async ({setTopRatedCourses})=>{
+    try {
+        const response = await apiConnector("GET", courseEndPoints.GET_TOP_RATED_COURSES, null, null, null);
+        setTopRatedCourses(response.data.courses);
+
+    } catch (e) {
+        console.log(e.response);
+        toast.error(e.response.message);
+    }
+}
+
+
 export const getCategoryPageDetails = async ({ categoryId, setCategoryDetails }) => {
     const toastId = toast.loading("Loading...");
     try {

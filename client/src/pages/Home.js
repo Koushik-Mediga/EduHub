@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaArrowRight, FaSpinner } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import Button from '../components/core/HomePage/Button'
@@ -8,7 +8,9 @@ import TimelineSection from '../components/core/HomePage/TimelineSection'
 import LearningLanguagesSection from '../components/core/HomePage/LearningLanguagesSection'
 import Instructor from '../assets/Images/Instructor.png'
 import Footer from '../components/common/Footer'
-import {ClipLoader} from 'react-spinners';
+import { ClipLoader } from 'react-spinners'
+import { getTopRatedCourses } from '../services/operations/courseApi'
+import TopCoursesSection from '../components/core/HomePage/TopCoursesSection'
 
 const Home = () => {
   return (
@@ -16,7 +18,7 @@ const Home = () => {
       <div className=' relative w-screen flex flex-col items-center text-white mx-auto justify-between'>
         <Link to={"/signup"}>
           <div className='group mt-10 p-1 mx-auto rounded-full bg-richblack-800 font-bold text-richblack-200 transition-all duration-200 hover:scale-95 w-fit'>
-            <div className='flex flex-row justify-between items-center rounded-full px-10 py-[5px] transition-all duration-200 group-hover:bg-richblack-900'>
+            <div className='flex flex-row justify-between items-center rounded-full px-10 py-[5px] transition-all duration-200 group-hover:bg-richblack-700'>
               <p>Become an Instructor </p><FaArrowRight></FaArrowRight>
             </div>
           </div>
@@ -34,36 +36,36 @@ const Home = () => {
           <video autoPlay loop muted src={Banner} className='shadow-[-3px_-3px_20px_#3399FF]'></video>
         </div>
         <div className='flex flex-col gap-5 items-center w-8/12'>
-          <CodeBlocks 
-          className='mb-20'
-          headingText="Unlock your Coding Potential with our Online Courses"
-          paraText="Our courses are designed and taught by Industry Experts who have years of experience and are passionate about sharing their knowledge with you"
-          button1Content="Try it yourself"
-          linkTo1="/signup"
-          button2Content="Learn More"
-          linkTo2="/login"
-          alignLeft={true}
-        ></CodeBlocks>
-        <CodeBlocks 
-          headingText="Start Coding in seconds"
-          paraText="Go ahead, give a try, Our hands-on learning experience means you will be writing real code from the very first day"
-          button1Content="Start Tutorial Now"
-          linkTo1="/signup"
-          button2Content="Learn More"
-          linkTo2="/login"
-          alignLeft={false}
-        ></CodeBlocks>
+          <CodeBlocks
+            className='mb-20'
+            headingText="Unlock your Coding Potential with our Online Courses"
+            paraText="Our courses are designed and taught by Industry Experts who have years of experience and are passionate about sharing their knowledge with you"
+            button1Content="Try it yourself"
+            linkTo1="/signup"
+            button2Content="Learn More"
+            linkTo2="/login"
+            alignLeft={true}
+          ></CodeBlocks>
+          <CodeBlocks
+            headingText="Start Coding in seconds"
+            paraText="Go ahead, give a try, Our hands-on learning experience means you will be writing real code from the very first day"
+            button1Content="Start Tutorial Now"
+            linkTo1="/signup"
+            button2Content="Learn More"
+            linkTo2="/login"
+            alignLeft={false}
+          ></CodeBlocks>
         </div>
       </div>
 
-      <div className=' bg-pure-greys-5 text-richblack-700 w-screen flex flex-col items-center'>
+      <div className='bg-pure-greys-5 text-richblack-700 w-screen flex flex-col items-center relative overflow-visible'>
         <div className='bg-image-2 w-full h-[250px] flex flex-col items-center'>
-        <div className='w-11/12 h-full max-w-maxContent flex flex-col items-center justify-center'>
-          <div className='flex flex-row items-center gap-3 mt-20'>
-            <Button text="Explore all catalogs" active={true} link="/signup"></Button>
-            <Button text="Learn More" active={false} link="/signup"></Button>
+          <div className='w-11/12 h-full max-w-maxContent flex flex-col items-center justify-center'>
+            <div className='flex flex-row items-center gap-3 mt-20'>
+              <Button text="Explore all catalogs" active={true} link="/signup"></Button>
+              <Button text="Learn More" active={false} link="/signup"></Button>
+            </div>
           </div>
-        </div>
         </div>
         <div className='w-11/12 max-w-maxContent flex flex-col items-center mt-24'>
           <div className='flex flex-row justify-center items-center'>
@@ -80,10 +82,13 @@ const Home = () => {
           </div>
         </div>
         <TimelineSection></TimelineSection>
-        <LearningLanguagesSection/>
+        <LearningLanguagesSection />
+        <div className="absolute -bottom-52 z-30 w-full flex justify-center">
+          <TopCoursesSection />
+        </div>
       </div>
 
-      <div className=' w-full flex flex-col items-center'>
+      <div className='w-full flex flex-col items-center pt-56'>
         <div className='flex flex-row w-10/12 justify-center items-center gap-5 mt-16'>
           <img src={Instructor} alt='Instructor image' className='w-1/3 mt-10 mb-5 shadow-[-15px_-15px_0px_rgb(255,255,255)]'></img>
           <div className='flex flex-col gap-5 w-1/3'>
@@ -92,9 +97,9 @@ const Home = () => {
             <Button text="Start teaching today" link={"/signup"} active={true}></Button>
           </div>
         </div>
-        <Footer/>
+        <Footer />
       </div>
-      
+
     </div>
   )
 }
