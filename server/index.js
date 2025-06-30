@@ -4,7 +4,7 @@ const dbConnect = require('./config/database');
 const cloudinaryConnect = require('./config/cloudinary');
 
 require("dotenv").config();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 4000;
 
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
@@ -18,7 +18,7 @@ const fileUpload = require("express-fileupload");
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin:"http://localhost:3000",
+    origin: ['http://localhost:3000', 'https://eduhub-frontend-ten.vercel.app'],
     credentials:true,
 }));
 app.use(fileUpload({
@@ -43,6 +43,7 @@ app.get('/', (req, res)=>{
 });
 
 dbConnect();
+console.log("Database is successfully connected")
 cloudinaryConnect();
 app.listen(PORT, ()=>{
     console.log(`Server is running on port ${PORT}`);
