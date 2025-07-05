@@ -1,9 +1,10 @@
 import { apiConnector } from "../apiconnector";
-import { paymentEndpoints } from "../apis";
+import { paymentEndpoints, profileEndPoints } from "../apis";
 import toast from "react-hot-toast";
 import FullLogo from '../../../src/assets/Logo/Logo-Full-Dark (2).png'
 import { resetCart } from "../../slices/cartSlice";
 import { setPaymentLoading } from "../../slices/courseSlice";
+import { setUser } from "../../slices/profileSlice";
 
 const {CAPTURE_PAYMENT_API, VERIFY_PAYMENT_API} = paymentEndpoints;
 
@@ -76,6 +77,14 @@ async function verifyPayment(bodyData, token, navigate, dispatch){
             throw new Error(response.data.message);
         }
         toast.success("Payment Successful, You are added to the course");
+        try {
+            const userDetailsAfterPayment = await apiConnector("GET", profileEndPoints.GETUSERDETAILS, null, {Authorization: `Bearer ${token}`}, null);
+            dispatch(setUser(userDetailsAfterPayment.data.user));
+            localStorage.setItem("user", JSON.stringify(userDetailsAfterPayment.data.user));
+        } catch (error) {
+            console.log(error.response);
+            toast.error("Cannot set user details");
+        }
         navigate("/dashboard/enrolled-courses");
         dispatch(resetCart());
     } catch (error) {
