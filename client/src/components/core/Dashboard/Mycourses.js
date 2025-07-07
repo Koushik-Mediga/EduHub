@@ -54,7 +54,7 @@ const Mycourses = () => {
                 myCourses.map((course, index)=>{
                     return (
                         <div key={index} className='w-full flex flex-row h-60 m-6'>
-                            <img src={course.thumbnail} alt='Thumbnail Image' className='w-[40%] object-cover mr-5 rounded-xl' />
+                            <img onClick={()=>{navigate(`/course/${course._id}`)}} src={course.thumbnail} alt='Thumbnail Image' className='w-96 h-64 mr-5 rounded-xl hover:cursor-pointer' />
                             <div className='w-[70%] flex flex-col gap-4'>
                                 <h2 className='text-xl flex flex-row justify-between items-center'>{course.courseName} <div className='flex flex-row justify-center items-center gap-2'><MdEdit onClick={()=>editCourseHandler(course)} className='text-richblack-400 hover:cursor-pointer transition-all hover:text-richblack-50' /><MdDelete onClick={()=>{navigate(`/dashboard/deletecourse?courseId=${course._id}`)}} className='text-richblack-400 hover:cursor-pointer transition-all hover:text-pink-400' /></div></h2>
                                 <p className='text-sm text-richblack-200'>{course.publishStatus}</p>
